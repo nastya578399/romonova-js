@@ -9,8 +9,8 @@
  Пример:
    forEach([1, 2, 3], (el) => console.log(el))
  */
-function forEach(array, fn){
-  for (let i = 0; i < array.lenght; i++){
+function forEach(array, fn) {
+  for (let i = 0; i < array.length; i++) { 
     fn(array[i], i, array);
   }
 }
@@ -25,8 +25,15 @@ function forEach(array, fn){
    map([1, 2, 3], (el) => el ** 2) // [1, 4, 9]
  */
 function map(array, fn) {
-  
+  const modified = [];
+
+  for (let i = 0; i < array.length; i++) {
+    modified[i] = fn(array[i], i, array);
+  }
+
+  return modified;
 }
+
 
 /*
  Задание 3:
@@ -38,6 +45,14 @@ function map(array, fn) {
    reduce([1, 2, 3], (all, current) => all + current) // 6
  */
 function reduce(array, fn, initial) {
+  const hasInitial = typeof initial !== 'undefined';
+  let prev = hasInitial ? initial : array[0];
+
+  for (let i = hasInitial ? 0 : 1; i < array.length; i++) {
+    prev = fn(prev, array[i], i, array);
+  }
+
+  return prev;
 }
 
 /*
@@ -49,6 +64,7 @@ function reduce(array, fn, initial) {
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
 function upperProps(obj) {
+ return Object.keys(obj).map(name => name.toUpperCase());
 }
 
 /*
@@ -63,6 +79,13 @@ function upperProps(obj) {
    console.log(obj.foo); // 4
  */
 function createProxy(obj) {
+  return new Proxy(obj,{
+    set(obj, key, value) {
+      //obj = {} key = a value = 10 
+      obj[key] = value ** 2;
+      return true;
+    },
+  });
 }
 
 export { forEach, map, reduce, upperProps, createProxy };
