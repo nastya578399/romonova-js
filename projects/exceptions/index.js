@@ -145,7 +145,7 @@ function calculator(number = 0) {
           throw new Error('division by 0');
         }
 
-        return /= arg;
+       result /= arg;
       }
 
       return result;
@@ -155,8 +155,10 @@ function calculator(number = 0) {
       let result = number;
 
       for (const arg of args) {
-
+        result *= arg;
       }
+     
+     return result;
     },
   };
 }
